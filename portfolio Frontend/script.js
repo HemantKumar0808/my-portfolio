@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const DEV_ENDPOINT = "https://my-portfolio-production-01.up.railway.app/api/resume/download";
         const overrideEndpoint = window.RESUME_DOWNLOAD_ENDPOINT || "";
-        const defaultEndpoint = overrideEndpoint || (window.location.hostname === "localhost" ? DEV_ENDPOINT : "/api/resume/download");
+        const defaultEndpoint = overrideEndpoint || DEV_ENDPOINT;
 
         function resolveEndpoint(value) {
             if (!value) return defaultEndpoint;
