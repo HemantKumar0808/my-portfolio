@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All Projects - Frontend, Backend & Full Stack">
+    <title>All Projects | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="fevicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fevicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fevicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="fevicon/favicon.ico">
+    <script src="/script.js" defer></script>
+</head>
+
+<body>
+    <div class="progress-bar" role="presentation" aria-hidden="true">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+    </div>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="btn btn-outline back-to-portfolio"><i class="fas fa-arrow-left"></i> Back to
+                    Portfolio</a>
+                <button class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="projects-page">
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">All Projects</h1>
+                <p class="section-subtitle">Frontend, Backend & Full Stack — more of my work.</p>
+            </div>
+
+            <!-- Backend Section -->
+            <section id="backend" class="project-category project-page-card">
+                <h2 class="category-title"><i class="fas fa-server"></i> Backend</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="/IMG/HospitalManagementThumbnail.png" alt="Hospital Management System">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Hospital Management System</h3>
+                            <p class="project-description">
+                                A robust CRUD REST API with input validation, exception handling, and Swagger documentation. Built using Spring Boot, JPA/Hibernate, and MySQL for efficient healthcare data management.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Java</span>
+                                <span class="tech-tag">Spring Boot</span>
+                                <span class="tech-tag">Hibernate/JPA</span>
+                                <span class="tech-tag">MySQL</span>
+                            </div>
+                            <a href="https://github.com/HemantKumar0808/Hospital-Management-Application" class="project-link" target="_blank">GitHub <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="/IMG/SpringSecutityThumbnail.png" alt="Auth API">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Spring Security</h3>
+                            <p class="project-description">
+                                Implemented Spring Security for authentication and authorization in a web application, featuring role-based access control, secure password handling, JWT integration, and protection against common security vulnerabilities.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Spring Boot</span>
+                                <span class="tech-tag">Spring Security</span>
+                                <span class="tech-tag">JPA</span>
+                            </div>
+                            <a href="https://github.com/HemantKumar0808/spring-security" class="project-link" target="_blank">GitHub <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Frontend Section -->
+            <section id="frontend" class="project-category project-page-card">
+                <h2 class="category-title"><i class="fas fa-palette"></i> Frontend</h2>
+                <div class="projects-grid">
+
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <video class="project-video" muted preload="metadata" poster="/IMG/FoodWorld2.0Thumbnail.png">
+                                <source src="/Videos/Food World 2.0.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Food World 2.0</h3>
+                            <p class="project-description">A responsive landing page with well-structured sections, smooth scrolling, and interactive form UI, crafted using semantic HTML and modern CSS for a seamless user experience
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">JavaScript</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://food-world-by-hemant-c96e3c.netlify.app/" class="project-link"
+                                    target="_blank" rel="noopener noreferrer">Preview <i
+                                        class="fas fa-external-link-alt"></i></a>
+                                <a href="https://github.com/HemantKumar0808/Web-Development/tree/main/FW%202.0" class="project-link project-link-gap"
+                                    target="_blank" rel="noopener noreferrer">GitHub <i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <video class="project-video" muted preload="metadata" poster="/IMG/NetflixCloneThumbnail.png" style="object-fit: fill">
+                                <source src="/Videos/Netflix Clone.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Netflix Clone</h3>
+                            <p class="project-description">
+                                Netflix-inspired streaming platform clone, showcasing responsive UI, dynamic content rendering, and seamless user experience, modern design principles, and interactive media features.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">Bootstrap</span>
+                                <span class="tech-tag">JavaScript</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://flixmore.netlify.app/" class="project-link" target="_blank">Preview <i
+                                        class="fas fa-external-link-alt"></i></a>
+                                <a href="https://github.com/HemantKumar0808/Web-Development/tree/main/Netflix%20Clone" class="project-link project-link-gap" target="_blank"
+                                    rel="noopener noreferrer">GitHub <i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Full Stack Section -->
+            <section id="fullstack" class="project-category project-page-card">
+                <h2 class="category-title"><i class="fas fa-code"></i> Full Stack</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="/IMG/AI Assistant.png" alt="AI Assistant">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Smart AI Email Assistant</h3>
+                            <p class="project-description">
+                                Coming soon
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Spring AI</span>
+                                <span class="tech-tag">Gemini API</span>
+                                <span class="tech-tag">Spring Boot</span>
+                                <span class="tech-tag">React</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="coming soon.html" class="project-link" target="_blank">Preview<i
+                                        class="fas fa-external-link-alt"></i></a>
+                                <a href="https://github.com/HemantKumar0808/Java-Full-Stack-Project"
+                                    class="project-link project-link-gap" target="_blank" rel="noopener noreferrer">GitHub
+                                    <i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Hemant Kumar. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
