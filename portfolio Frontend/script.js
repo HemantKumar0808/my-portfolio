@@ -278,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const submitBtn = contactForm.querySelector("button[type='submit']");
 
         const messageDiv = document.getElementById("form-message");
+        const CONTACT_ENDPOINT = contactForm.dataset.contactEndpoint || "https://my-portfolio-production-01.up.railway.app/api/contact";
 
         function showMessage(message, type = "info") {
             if (!messageDiv) return;
@@ -323,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.classList.add("loading-progress");
                 submitBtn.innerHTML = '<span class="progress-text">Sending...</span><span class="progress-bar"></span>';
 
-                const response = await fetch("https://my-portfolio-production-01.up.railway.app/api/contact", {
+                const response = await fetch(CONTACT_ENDPOINT, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)

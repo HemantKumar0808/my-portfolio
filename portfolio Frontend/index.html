@@ -119,8 +119,8 @@
                         <div class="hero-buttons">
                             <a href="#contact" class="btn btn-primary">Get in touch</a>
                             <a href="#projects" class="btn btn-secondary">View projects</a>
-                            <button id="cv-download-btn" type="button" class="btn btn-outline"
-                                data-resume-endpoint="http://localhost:8080/api/resume/download">Download CV</button>
+                        <button id="cv-download-btn" type="button" class="btn btn-outline"
+                            data-resume-endpoint="https://my-portfolio-production-01.up.railway.app/api/resume/download">Download CV</button>
                         </div>
                         <div class="hero-social">
                             <a href="https://www.linkedin.com/in/hemant-kumar-ht101/" aria-label="LinkedIn"
@@ -648,7 +648,8 @@
                     </p>
                 </div>
                 <div class="contact-wrapper">
-                    <form class="contact-form">
+                    <form class="contact-form"
+                        data-contact-endpoint="https://my-portfolio-production-01.up.railway.app/api/contact">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
