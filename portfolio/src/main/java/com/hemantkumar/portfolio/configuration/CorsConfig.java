@@ -17,7 +17,7 @@ public class CorsConfig implements WebMvcConfigurer {
                         "https://my-portfolio-rf5159ngt-hemantkumar0808s-projects.vercel.app" // Allow specific production domains
                 )
                 .allowedMethods("GET", "POST", "OPTIONS") // Allow specific HTTP methods
-                .allowedHeaders("*") // Allow all headers
+                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With","Accept", "Origin") // Allow all headers
                 .allowCredentials(true) // Allow credentials (cookies, authorization headers, etc.)
                 .maxAge(3600); // Cache pre-flight response for 1 hour
     }
