@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.classList.add("loading-progress");
                 submitBtn.innerHTML = '<span class="progress-text">Sending...</span><span class="progress-bar"></span>';
 
-                const response = await fetch("http://localhost:8080/api/contact", {
+                const response = await fetch("https://my-portfolio-production-01.up.railway.app/api/contact", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     (function setupCvDownloadButton() {
         if (!cvDownloadBtn) return;
 
-        const DEV_ENDPOINT = "http://localhost:8080/api/resume/download";
+        const DEV_ENDPOINT = "https://my-portfolio-production-01.up.railway.app/api/resume/download";
         const overrideEndpoint = window.RESUME_DOWNLOAD_ENDPOINT || "";
         const defaultEndpoint = overrideEndpoint || (window.location.hostname === "localhost" ? DEV_ENDPOINT : "/api/resume/download");
 
