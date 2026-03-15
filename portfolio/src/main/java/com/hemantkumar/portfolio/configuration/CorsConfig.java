@@ -12,7 +12,8 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Apply CORS settings to all endpoints
                 .allowedOrigins(
                         "http://localhost:5502", // Allow localhost for development
-                        "http://127.0.0.1:5502" // Allow localhost with IP for development
+                        "http://127.0.0.1:5502", // Allow localhost with IP for development
+                        "hemant-dev.vercel.app"
                 )
                 .allowedMethods("GET", "POST", "OPTIONS") // Allow specific HTTP methods
                 .allowedHeaders("*") // Allow all headers
