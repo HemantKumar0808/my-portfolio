@@ -15,7 +15,10 @@ spring:
 
 sendgrid:
   api-key: ${SENDGRID_API_KEY}
-  from-email: hemusharma10001@gmail.com
+  from-email: ${SENDGRID_FROM_EMAIL}
+
+app:
+  owner-email: ${OWNER_EMAIL}
 
 server:
   port: ${PORT:8080}

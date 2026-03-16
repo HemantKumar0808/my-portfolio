@@ -44,18 +44,18 @@ public class ContactMessageServiceImpl implements ContactMessageService {
 
         try {
             // Send email to site owner
-//            emailService.sendContactMail(
-//                    contactMessageRequest.getName(),
-//                    contactMessageRequest.getEmail(),
-//                    contactMessageRequest.getSubject(),
-//                    contactMessageRequest.getMessage()
-//            );
+            emailService.sendContactMail(
+                    contactMessageRequest.getName(),
+                    contactMessageRequest.getEmail(),
+                    contactMessageRequest.getSubject(),
+                    contactMessageRequest.getMessage()
+            );
 
             // Send auto-reply to sender
-//            emailService.sendAutoReply(
-//                    contactMessageRequest.getName(),
-//                    contactMessageRequest.getEmail()
-//            );
+            emailService.sendAutoReply(
+                    contactMessageRequest.getName(),
+                    contactMessageRequest.getEmail()
+            );
 
             ContactMessage message = new ContactMessage();
             message.setName(contactMessageRequest.getName());

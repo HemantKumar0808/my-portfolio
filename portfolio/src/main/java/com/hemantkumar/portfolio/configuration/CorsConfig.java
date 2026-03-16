@@ -10,16 +10,16 @@ public class CorsConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-
         return new WebMvcConfigurer() {
-
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-
-                registry.addMapping("/api/**") // only API endpoints
-                        .allowedOriginPatterns(
-                                "http://localhost:*",
-                                "https://*.vercel.app"
+                registry.addMapping("/api/**")
+                        .allowedOrigins(
+                                "http://localhost:5502",
+                                "http://127.0.0.1:5502",
+                                "https://hemant-dev.vercel.app",
+                                "https://my-portfolio-git-main-hemantkumar0808s-projects.vercel.app",
+                                "https://my-portfolio-bzkx4bpuo-hemantkumar0808s-projects.vercel.app"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")

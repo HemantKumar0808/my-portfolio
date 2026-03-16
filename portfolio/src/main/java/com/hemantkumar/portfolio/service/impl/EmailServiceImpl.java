@@ -16,8 +16,11 @@ public class EmailServiceImpl implements EmailService {
     @Value("${sendgrid.api-key}")
     private String apiKey;
 
-    @Value("${sendgrid.from-email:hemusharma10001@gmail.com}")
+    @Value("${sendgrid.from-email}")
     private String fromEmail;
+
+    @Value("${app.owner-email}")
+    private String ownerEmail;
 
     @Override
     public void sendContactMail(String name, String email, String subject, String message) {
@@ -39,7 +42,7 @@ public class EmailServiceImpl implements EmailService {
             );
 
             Email from = new Email(fromEmail, "Hemant Kumar Portfolio");
-            Email to = new Email(fromEmail);  // tumhare pass aayega
+            Email to = new Email(ownerEmail);
 
             Mail mail = new Mail(from, "New Portfolio Contact: " + displayName, to, new Content("text/plain", body));
 
@@ -50,9 +53,8 @@ public class EmailServiceImpl implements EmailService {
 
             Response response = sg.api(request);
 
-            System.out.println("SendGrid Status: " + response.getStatusCode());
             if (response.getStatusCode() != 202) {
-                System.out.println("Body: " + response.getBody());
+                throw new RuntimeException("SendGrid failed: " + response.getBody());
             }
 
         } catch (Exception e) {
