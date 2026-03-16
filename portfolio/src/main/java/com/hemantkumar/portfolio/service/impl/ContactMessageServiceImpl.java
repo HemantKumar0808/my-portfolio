@@ -6,7 +6,6 @@ import com.hemantkumar.portfolio.exception.RateLimitException;
 import com.hemantkumar.portfolio.repository.ContactMessageRepository;
 import com.hemantkumar.portfolio.requestDto.ContactMessageRequest;
 import com.hemantkumar.portfolio.service.ContactMessageService;
-import com.hemantkumar.portfolio.service.EmailService;
 import com.hemantkumar.portfolio.service.EmailValidationService;
 import io.github.bucket4j.Bucket;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 public class ContactMessageServiceImpl implements ContactMessageService {
 
     private final ContactMessageRepository repository;
-    private final EmailService emailService;
     private final EmailValidationService emailValidationService;
     private final RateLimitServiceImpl rateLimitService;
 
@@ -44,18 +42,18 @@ public class ContactMessageServiceImpl implements ContactMessageService {
 
         try {
             // Send email to site owner
-            emailService.sendContactMail(
-                    contactMessageRequest.getName(),
-                    contactMessageRequest.getEmail(),
-                    contactMessageRequest.getSubject(),
-                    contactMessageRequest.getMessage()
-            );
+//             emailService.sendContactMail(
+//                     contactMessageRequest.getName(),
+//                     contactMessageRequest.getEmail(),
+//                     contactMessageRequest.getSubject(),
+//                     contactMessageRequest.getMessage()
+//             );
 
             // Send auto-reply to sender
-            emailService.sendAutoReply(
-                    contactMessageRequest.getName(),
-                    contactMessageRequest.getEmail()
-            );
+//             emailService.sendAutoReply(
+//                     contactMessageRequest.getName(),
+//                     contactMessageRequest.getEmail()
+//             );
 
             ContactMessage message = new ContactMessage();
             message.setName(contactMessageRequest.getName());
@@ -64,11 +62,11 @@ public class ContactMessageServiceImpl implements ContactMessageService {
             message.setMessage(contactMessageRequest.getMessage());
             repository.save(message);
 
-            logger.info("Message saved and emails sent for: {}", contactMessageRequest.getEmail());
+            logger.info("Message saved for: {}", contactMessageRequest.getEmail());
 
         } catch (Exception e) {
 
-            logger.error("Email sending failed", e);
+            logger.error("Failed to process message", e);
             throw new RuntimeException("Failed to process message. Please try again later.");
         }
     }

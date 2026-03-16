@@ -14,7 +14,8 @@ public class CorsConfig implements WebMvcConfigurer {
                         "http://localhost:5502", // Allow localhost for development
                         "http://127.0.0.1:5502", // Allow localhost with IP for development
                         "https://hemant-dev.vercel.app", // Allow specific production domains
-                        "https://my-portfolio-rf5159ngt-hemantkumar0808s-projects.vercel.app" // Allow specific production domains
+                        "my-portfolio-git-main-hemantkumar0808s-projects.vercel.app", // Allow specific production domains
+                        "my-portfolio-bzkx4bpuo-hemantkumar0808s-projects.vercel.app"
                 )
                 .allowedMethods("GET", "POST", "OPTIONS") // Allow specific HTTP methods
                 .allowedHeaders("Content-Type", "Authorization", "X-Requested-With","Accept", "Origin") // Allow all headers
