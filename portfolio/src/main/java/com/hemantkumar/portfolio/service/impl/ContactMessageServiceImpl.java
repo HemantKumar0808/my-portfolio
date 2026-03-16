@@ -52,10 +52,10 @@ public class ContactMessageServiceImpl implements ContactMessageService {
             );
 
             // Send auto-reply to sender
-            emailService.sendAutoReply(
-                    contactMessageRequest.getName(),
-                    contactMessageRequest.getEmail()
-            );
+//            emailService.sendAutoReply(
+//                    contactMessageRequest.getName(),
+//                    contactMessageRequest.getEmail()
+//            );
 
             ContactMessage message = new ContactMessage();
             message.setName(contactMessageRequest.getName());
