@@ -1,25 +1,31 @@
 package com.hemantkumar.portfolio.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
+public class CorsConfig {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Apply CORS settings to all endpoints
-                .allowedOrigins(
-                        "http://localhost:5502", // Allow localhost for development
-                        "http://127.0.0.1:5502", // Allow localhost with IP for development
-                        "https://hemant-dev.vercel.app", // Allow specific production domains
-                        "my-portfolio-git-main-hemantkumar0808s-projects.vercel.app", // Allow specific production domains
-                        "my-portfolio-bzkx4bpuo-hemantkumar0808s-projects.vercel.app"
-                )
-                .allowedMethods("GET", "POST", "OPTIONS") // Allow specific HTTP methods
-                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With","Accept", "Origin") // Allow all headers
-                .allowCredentials(true) // Allow credentials (cookies, authorization headers, etc.)
-                .maxAge(3600); // Cache pre-flight response for 1 hour
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+
+        return new WebMvcConfigurer() {
+
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+
+                registry.addMapping("/api/**") // only API endpoints
+                        .allowedOriginPatterns(
+                                "http://localhost:*",
+                                "https://*.vercel.app"
+                        )
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true)
+                        .maxAge(3600);
+            }
+        };
     }
 }
