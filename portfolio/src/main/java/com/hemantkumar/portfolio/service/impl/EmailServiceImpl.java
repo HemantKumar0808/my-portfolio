@@ -1,84 +1,92 @@
 package com.hemantkumar.portfolio.service.impl;
 
 import com.hemantkumar.portfolio.service.EmailService;
+import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
-    private final JavaMailSender mailSender;
+    @Value("${sendgrid.api-key}")
+    private String apiKey;
 
-    @Value("${spring.mail.username}")
-    private String sender;
+    @Value("${sendgrid.from-email:hemusharma10001@gmail.com}")
+    private String fromEmail;
 
     @Override
     public void sendContactMail(String name, String email, String subject, String message) {
+        try {
+            SendGrid sg = new SendGrid(apiKey);
 
-        SimpleMailMessage mail = new SimpleMailMessage();
+            String displayName = (name != null && !name.trim().isEmpty()) ? name : "Someone";
+            String displaySubject = (subject != null && !subject.trim().isEmpty()) ? subject : "New Contact Message";
 
-        mail.setTo(sender);
+            String body = String.format(
+                    "Hi Hemant,\n\n" +
+                            "New contact message from your portfolio:\n\n" +
+                            "Name: %s\n" +
+                            "Email: %s\n" +
+                            "Subject: %s\n\n" +
+                            "Message:\n%s\n\n" +
+                            "Reply directly: %s",
+                    displayName, email, displaySubject, message != null ? message : "(empty)", email
+            );
 
+            Email from = new Email(fromEmail, "Hemant Kumar Portfolio");
+            Email to = new Email(fromEmail);  // tumhare pass aayega
 
-        String displaySubject = (subject != null && !subject.trim().isEmpty()) ? subject : "(No subject provided)";
-        String displayName = (name != null && !name.trim().isEmpty()) ? name : "Someone";
+            Mail mail = new Mail(from, "New Portfolio Contact: " + displayName, to, new Content("text/plain", body));
 
-        mail.setSubject("New Portfolio Contact: " + displayName + " - " + displaySubject);
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
 
-        StringBuilder text = new StringBuilder();
-        text.append("Hi Hemant,\n\n");
+            Response response = sg.api(request);
 
-        text.append("You have a new contact message from your portfolio website:\n\n");
+            System.out.println("SendGrid Status: " + response.getStatusCode());
+            if (response.getStatusCode() != 202) {
+                System.out.println("Body: " + response.getBody());
+            }
 
-        text.append("Name: ").append(displayName).append("\n");
-        text.append("Email: ").append(email).append("\n");
-        text.append("Subject: ").append(displaySubject).append("\n\n");
-        text.append("Message:\n").append(message != null ? message : "(No message provided)").append("\n\n");
-
-        text.append("Reply directly to: ").append(email).append("\n\n");
-
-        text.append("Best,\n");
-        text.append("Your Portfolio System");
-
-        mail.setText(text.toString());
-
-        mailSender.send(mail);
+        } catch (Exception e) {
+            throw new RuntimeException("SendGrid API failed", e);
+        }
     }
 
     @Override
     public void sendAutoReply(String name, String email) {
+        try {
+            SendGrid sg = new SendGrid(apiKey);
 
-        SimpleMailMessage mail = new SimpleMailMessage();
+            String body = String.format(
+                    "Hi %s,\n\n" +
+                            "Thank you for reaching out! 🙌\n\n" +
+                            "I've received your message and will reply within 24-48 hours.\n\n" +
+                            "Best,\nHemant Kumar",
+                    (name != null && !name.trim().isEmpty()) ? name : "there"
+            );
 
-        mail.setTo(email);
-        mail.setSubject("Thank You for Reaching Out, " + name + "!");
+            Email from = new Email(fromEmail, "Hemant Kumar Portfolio");
+            Email to = new Email(email);
 
-        StringBuilder text = new StringBuilder();
-        text.append("Hi ").append(name != null && !name.trim().isEmpty() ? name : "there").append(",\n\n");
+            Mail mail = new Mail(from, "Thank You for Reaching Out!", to, new Content("text/plain", body));
 
-        text.append("Thank you so much for connecting with me. 🙌\n");
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
 
-        text.append("I've received your message and really appreciate you taking the time to reach out.\n\n");
+            sg.api(request);
 
-        text.append("I'll personally go through it and get back to you as soon as possible – usually within 24–48 hours. 😊\n\n");
-
-        text.append("In the meantime, feel free to check out more of my work or connect with me on my social handles:\n");
-        text.append("- LinkedIn: https://www.linkedin.com/in/hemant-kumar-ht101/\n");
-        text.append("- X: https://x.com/Hemusharma01\n\n");
-        text.append("- Instagram: https://www.instagram.com/hemu_sharma_01\n\n");
-
-
-        text.append("Warm regards,\n");
-        text.append("Hemant Kumar\n");
-
-        mail.setText(text.toString());
-
-        mail.setFrom(sender);
-
-        mailSender.send(mail);
+        } catch (Exception e) {
+            throw new RuntimeException("Auto-reply failed", e);
+        }
     }
 }
