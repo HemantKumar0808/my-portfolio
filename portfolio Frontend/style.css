@@ -852,30 +852,40 @@ body {
 
 .image-wrapper {
     position: relative;
+    display: inline-flex;
+    margin-top: 4.5em;
 }
 
 .profile-img {
-    margin-top: 4.5em;
     width: 230px;
     height: 260px;
     border-radius: 16px;
     object-fit: cover;
     border: 2px solid var(--accent-color);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.1);
     transition: var(--transition-fast);
     position: relative;
     z-index: 2;
 }
 
+.image-wrapper:hover .profile-img {
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14), 0 0 12px rgba(243, 156, 18, 0.1);
+}
+
 .image-glow {
     position: absolute;
-    top: 35px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
+    inset: -3px;
+    background: linear-gradient(135deg, var(--accent-color), var(--warm-gold));
     border-radius: 18px;
-    opacity: 0.15;
-    filter: blur(15px);
+    opacity: 0;
+    filter: blur(10px);
     z-index: 1;
+    transition: var(--transition-fast);
+}
+
+.image-wrapper:hover .image-glow {
+    opacity: 0.12;
+    filter: blur(12px);
 }
 
 .hero-text {
@@ -949,6 +959,37 @@ body {
     background-clip: text;
     position: relative;
     transition: var(--transition);
+}
+
+.typewriter-role {
+    color: var(--text-primary);
+    display: inline-block;
+    min-width: 14ch;
+    position: relative;
+    white-space: nowrap;
+}
+
+.typewriter-role::after {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 0.9em;
+    margin-left: 5px;
+    background: var(--warm-gold);
+    vertical-align: -0.08em;
+    animation: typewriterBlink 0.8s steps(1) infinite;
+}
+
+@keyframes typewriterBlink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .typewriter-role::after {
+        animation: none;
+    }
 }
 
 .hero-description {
@@ -2141,7 +2182,7 @@ section {
         transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .profile-img {
+    .image-wrapper {
         margin-top: 3rem;
     }
 
@@ -2207,7 +2248,7 @@ section {
 
 @media (max-width: 768px) {
 
-    .profile-img {
+    .image-wrapper {
         margin-top: 4rem;
     }
     

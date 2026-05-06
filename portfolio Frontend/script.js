@@ -9,9 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link');
     const themeToggleBtn = document.querySelector('.theme-toggle');
     const faqItems = document.querySelectorAll('.faq-item');
-    const contactForm = document.querySelector('.contact-form');
     const heroContent = document.querySelector('.hero-content');
-    const cvDownloadBtn = document.getElementById('cv-download-btn');
     const projectCards = document.querySelectorAll('.project-card');
 
     // Reusable helper to avoid repeating class toggling boilerplate.
@@ -58,6 +56,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.style.transform = 'none';
             });
         }, 2500);
+    })();
+
+    /* =========================
+       3) Hero Role Typewriter
+    ========================== */
+    (function setupRoleTypewriter() {
+        const roleEl = document.querySelector('.typewriter-role');
+        if (!roleEl) return;
+
+        const roles = [
+            'Software Engineer',
+            'Software Developer',
+            'Java Backend Developer',
+            'Java Full Stack Developer'
+            
+        ];
+
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            roleEl.textContent = roles[3];
+            return;
+        }
+
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeRole() {
+            const currentRole = roles[roleIndex];
+            roleEl.textContent = currentRole.slice(0, charIndex);
+
+            if (!isDeleting && charIndex < currentRole.length) {
+                charIndex += 1;
+                setTimeout(typeRole, 90);
+                return;
+            }
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                isDeleting = true;
+                setTimeout(typeRole, 1300);
+                return;
+            }
+
+            if (isDeleting && charIndex > 0) {
+                charIndex -= 1;
+                setTimeout(typeRole, 45);
+                return;
+            }
+
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            setTimeout(typeRole, 300);
+        }
+
+        typeRole();
     })();
 
     projectCards.forEach(function (card) {
@@ -278,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const submitBtn = contactForm.querySelector("button[type='submit']");
 
         const messageDiv = document.getElementById("form-message");
-        const CONTACT_ENDPOINT = contactForm.dataset.contactEndpoint || "https://my-portfolio-production-01.up.railway.app/api/contact";
+        const contactEmail = "hemusharma10001@gmail.com";
 
         function showMessage(message, type = "info") {
             if (!messageDiv) return;
@@ -300,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        contactForm.addEventListener("submit", async (event) => {
+        contactForm.addEventListener("submit", (event) => {
             event.preventDefault();
             clearMessage();
 
@@ -318,47 +370,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const originalBtnText = submitBtn.textContent;
+            const emailBody = [
+                `Name: ${payload.name}`,
+                `Email: ${payload.email}`,
+                "",
+                payload.message
+            ].join("\n");
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contactEmail)}&su=${encodeURIComponent(payload.subject)}&body=${encodeURIComponent(emailBody)}`;
+            const mailtoUrl = `mailto:${contactEmail}?subject=${encodeURIComponent(payload.subject)}&body=${encodeURIComponent(emailBody)}`;
 
             try {
                 submitBtn.disabled = true;
                 submitBtn.classList.add("loading-progress");
-                submitBtn.innerHTML = '<span class="progress-text">Sending...</span><span class="progress-bar"></span>';
+                submitBtn.innerHTML = '<span class="progress-text">Opening Gmail...</span><span class="progress-bar"></span>';
 
-                const response = await fetch(CONTACT_ENDPOINT, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message || "Failed to send message");
-                }
-
-                const progressBar = submitBtn.querySelector(".progress-bar");
-                if (progressBar) {
-                    progressBar.style.animation = 'none';
-                    progressBar.style.width = '100%';
-                    progressBar.style.transition = 'width 0.5s ease-out';
-                }
+                window.open(gmailUrl, "_blank", "noopener");
 
                 submitBtn.classList.remove("loading-progress");
                 submitBtn.classList.add("success-btn");
-                submitBtn.innerHTML = "✓ Sent!";
+                submitBtn.innerHTML = "Gmail Ready";
                 submitBtn.style.backgroundColor = "#04aa6d";
 
-                showMessage("Thank you so much for connecting! I've received your message and will reply to your email as soon as possible.", "success");
-                contactForm.reset();
+                showMessage("Gmail should open with the message filled in. Please press send there.", "success");
 
                 setTimeout(() => {
                     submitBtn.classList.remove("success-btn");
                     submitBtn.textContent = originalBtnText;
+                    submitBtn.style.backgroundColor = "";
+                    submitBtn.disabled = false;
                 }, 10000);
 
             } catch (error) {
                 submitBtn.classList.remove("loading-progress");
-                showMessage(error.message, "error");
+                window.location.href = mailtoUrl;
+                showMessage("If Gmail did not open, please email me directly at hemusharma10001@gmail.com.", "error");
             } finally {
                 if (!submitBtn.classList.contains("success-btn")) {
                     submitBtn.disabled = false;
@@ -403,77 +448,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
         animatedTargets.forEach(el => observer.observe(el));
     })();
-
-    /* =========================
-       9) CV Download
-    ========================== */
-
-    (function setupCvDownloadButton() {
-        if (!cvDownloadBtn) return;
-
-        const DEV_ENDPOINT = "https://my-portfolio-production-01.up.railway.app/api/resume/download";
-        const overrideEndpoint = window.RESUME_DOWNLOAD_ENDPOINT || "";
-        const defaultEndpoint = overrideEndpoint || DEV_ENDPOINT;
-
-        function resolveEndpoint(value) {
-            if (!value) return defaultEndpoint;
-            try {
-                return new URL(value, window.location.origin).href;
-            } catch {
-                return value;
-            }
-        }
-
-        function getEndpoint() {
-            const attr = cvDownloadBtn.dataset.resumeEndpoint;
-            return resolveEndpoint(attr);
-        }
-
-        cvDownloadBtn.addEventListener("click", async (event) => {
-            event.preventDefault();
-            const btn = cvDownloadBtn;
-            const originalText = btn.textContent;
-
-            try {
-                btn.disabled = true;
-                btn.textContent = "...";
-
-                const response = await fetch(getEndpoint(), {
-                    method: "GET",
-                    mode: "cors",
-                    cache: "no-store"
-                });
-
-                if (!response.ok) {
-                    throw new Error("Failed to download CV");
-                }
-
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "Hemant_Kumar_CV.pdf";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                window.URL.revokeObjectURL(url);
-
-                btn.textContent = "✓";
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                }, 3000);
-
-            } catch (error) {
-                console.error("Download error:", error);
-                btn.textContent = "Download Failed";
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                }, 3000);
-            }
-        });
-    })();
-
 
 });
